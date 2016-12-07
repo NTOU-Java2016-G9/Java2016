@@ -1,0 +1,19 @@
+package entity;
+
+import org.joml.Vector3f;
+
+import renderer.Renderer;
+
+public abstract class Entity {
+
+	private Vector3f Pos = new Vector3f();
+	private Vector3f Speed = new Vector3f();
+	private Vector3f Acc = new Vector3f();
+	
+	public void Update(){
+		Speed.add(Acc);
+		Pos.add(Speed);
+	}
+	
+	public abstract Renderer getRender();
+}
