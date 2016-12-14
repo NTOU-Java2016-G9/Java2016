@@ -480,14 +480,17 @@ public class OpenGLFrame extends AWTGLCanvas {
 		}
 		if(attack)
 		{
-			MyWorld.entitySpawnInWorld(new EntityBullet(MyChopperEntity.getPos().x+2f,
-	        		MyChopperEntity.getPos().y+1.5f,
-	        		MyChopperEntity.getPos().z));
+			
 		}
 			
 		
 	}
-
+    void doAttack()
+    {
+    	MyWorld.entitySpawnInWorld(new EntityBullet(MyChopperEntity.getPos().x+2f,
+        		MyChopperEntity.getPos().y+1.5f,
+        		MyChopperEntity.getPos().z));
+    }
     void renderGrid() {
         glBegin(GL_LINES);
         glColor3f(0.2f, 0.2f, 0.2f);

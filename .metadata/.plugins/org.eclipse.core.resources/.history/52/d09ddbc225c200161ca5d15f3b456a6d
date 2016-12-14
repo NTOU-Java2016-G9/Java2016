@@ -94,9 +94,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.awt.AWTGLCanvas;
 import org.lwjgl.opengl.awt.GLData;
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 
 @SuppressWarnings({ "serial" })
@@ -481,13 +478,11 @@ public class OpenGLFrame extends AWTGLCanvas {
 		if(attack)
 		{
 			MyWorld.entitySpawnInWorld(new EntityBullet(MyChopperEntity.getPos().x+2f,
-	        		MyChopperEntity.getPos().y+1.5f,
-	        		MyChopperEntity.getPos().z));
+            		MyChopperEntity.getPos().y+1.5f,
+            		MyChopperEntity.getPos().z));
 		}
-			
-		
 	}
-
+    
     void renderGrid() {
         glBegin(GL_LINES);
         glColor3f(0.2f, 0.2f, 0.2f);

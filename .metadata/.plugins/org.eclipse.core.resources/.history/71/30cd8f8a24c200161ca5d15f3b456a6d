@@ -94,9 +94,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.awt.AWTGLCanvas;
 import org.lwjgl.opengl.awt.GLData;
 import java.util.ArrayList;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 
 @SuppressWarnings({ "serial" })
@@ -143,7 +140,6 @@ public class OpenGLFrame extends AWTGLCanvas {
 	 private boolean down = false;
 	 private boolean left = false;
 	 private boolean right = false;
-	 private boolean attack = false;
 	public OpenGLFrame( GLData data ) {
 		
 		super(data);
@@ -257,7 +253,9 @@ public class OpenGLFrame extends AWTGLCanvas {
 	             switch (key1)
 		           {
 		           	case 32:
-	            	 attack = true;
+	            	MyWorld.entitySpawnInWorld(new EntityBullet(MyChopperEntity.getPos().x+2f,
+											            		MyChopperEntity.getPos().y+1.5f,
+											            		MyChopperEntity.getPos().z));
 	            	break;
 		           }
 	        	}
@@ -295,12 +293,6 @@ public class OpenGLFrame extends AWTGLCanvas {
 			             	}
 			           
 		             }
-		            switch(key1)
-		            {
-		            case 32:
-		            	attack = false;
-		            	break;
-		            }
 		            
 		            
 	        	}
@@ -478,16 +470,8 @@ public class OpenGLFrame extends AWTGLCanvas {
 				MyChopperEntity.setBodyAngle(MyChopperEntity.getBodyAngle()+0.1f);
 			}
 		}
-		if(attack)
-		{
-			MyWorld.entitySpawnInWorld(new EntityBullet(MyChopperEntity.getPos().x+2f,
-	        		MyChopperEntity.getPos().y+1.5f,
-	        		MyChopperEntity.getPos().z));
-		}
-			
-		
 	}
-
+    
     void renderGrid() {
         glBegin(GL_LINES);
         glColor3f(0.2f, 0.2f, 0.2f);
