@@ -6,20 +6,21 @@ import java.util.List;
 import org.joml.Vector3f;
 import myUtil.AxisAlignedBB;
 import renderer.Renderer;
+import world.World;
 
 public abstract class Entity {
 
+	public World worldObj;
 	/*TODO SHOULD NEW A CLASS*/
-	private static ArrayList<AxisAlignedBB> AABBPool = new ArrayList<AxisAlignedBB>();
 	public List<AxisAlignedBB> getBoundingBoxes(){
 		
-		return AABBPool;
+		return worldObj.getBoundingBoxes(this);
 	}
 	
 	public Entity()
 	{
 		this.boundingBox = new AxisAlignedBB(0,0,0,0,0,0);
-		Entity.AABBPool.add(boundingBox);
+		//Entity.AABBPool.add(boundingBox);
 
 	}
 	private Vector3f Pos = new Vector3f();
@@ -43,7 +44,9 @@ public abstract class Entity {
 		Pos.z=z;
 	}
 	public abstract Renderer getRender();
-
+	public void dead(){
+		this.worldObj.entityRemoveFromWorld(this);
+	}
 	public abstract void setPosition(double x, double y, double z);
 	public abstract void moveEntity(double x, double y, double z);
 	public abstract void playSound(String name, float volume, float pitch);

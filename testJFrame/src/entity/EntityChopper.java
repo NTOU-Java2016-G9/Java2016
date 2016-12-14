@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.ArrayList;
+
 import myUtil.AxisAlignedBB;
 import renderer.RenderChopper;
 import renderer.Renderer;
@@ -12,17 +14,19 @@ public class EntityChopper extends Entity {
 	public EntityChopper()
 	{
 		super();
-		setEntityBoundingBox(new AxisAlignedBB(this.getPos().x,this.getPos().y,this.getPos().z,
-				this.getPos().x+2,this.getPos().y+2,this.getPos().z));
-		System.out.print(this.getBoundingBoxes());
+		setEntityBoundingBox(new AxisAlignedBB(
+				this.getPos().x-1.55,this.getPos().y-0.05,this.getPos().z-1.55,
+				this.getPos().x+1.55,this.getPos().y+3.05,this.getPos().z+1.55));
+		System.out.print(this.getEntityBoundingBox());
 	}
 	public EntityChopper(float x, float y, float z)
 	{
 		super();
 		this.setPos(x, y, z);
-		setEntityBoundingBox(new AxisAlignedBB(this.getPos().x,this.getPos().y,this.getPos().z,
-				this.getPos().x+2,this.getPos().y+2,this.getPos().z));
-		System.out.print(this.getBoundingBoxes());
+		setEntityBoundingBox(new AxisAlignedBB(
+				this.getPos().x-1.55,this.getPos().y-0.05,this.getPos().z-1.55,
+				this.getPos().x+1.55,this.getPos().y+3.05,this.getPos().z+1.55));
+		System.out.print(this.getEntityBoundingBox());
 	}
 	@Override
 	public void Update() {
@@ -64,20 +68,26 @@ public class EntityChopper extends Entity {
 		// TODO Auto-generated method stub
 		AxisAlignedBB beforeMoved = this.getEntityBoundingBox();
 		AxisAlignedBB afterMoved = this.getEntityBoundingBox().offset(x,y,z);
+		AxisAlignedBB whose = null;
 		boolean canMove = true;
 		for(AxisAlignedBB aabb1 : this.getBoundingBoxes()){
 			if(beforeMoved.equals(aabb1))continue;
 			if(afterMoved.intersectsWith(aabb1)){
 				canMove=false;
+				whose = aabb1;
 				break;
 			}
 		}
-		if(canMove){
-			this.setPos(getPos().add((float)x, (float)y, (float)z));
-			this.setEntityBoundingBox(afterMoved);
-		}else{
-			System.out.print("Outch!");
-			//hurt
+		this.setPos(getPos().add((float)x, (float)y, (float)z));
+		this.setEntityBoundingBox(afterMoved);
+		if(!canMove){
+			for(Entity iterator : this.worldObj.getEntitys()){
+				if(iterator.getEntityBoundingBox() == whose){
+					System.out.println("[" + iterator +"] Outch!");
+					break;
+				}
+			}
+			System.out.println("[" + this +"] Sorry!");
 		}
 	}
 

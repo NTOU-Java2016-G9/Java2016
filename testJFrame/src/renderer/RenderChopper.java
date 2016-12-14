@@ -18,7 +18,7 @@ public class RenderChopper extends Renderer {
 	public void renderer() {
 		// TODO Auto-generated method stub
 		
-		
+		renderAABB(EChopper.getEntityBoundingBox());
 		
 		MyChopper.setSpeed(EChopper.getPropellerSpeed());
 		

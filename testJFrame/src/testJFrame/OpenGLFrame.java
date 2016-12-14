@@ -121,8 +121,9 @@ public class OpenGLFrame extends AWTGLCanvas {
     private float rotateZ;
     private float PosX = 0f;
     private float PosY = 1.5f;
-    private float PosZ = 20f;
+    private float PosZ = 50f;
     private EntityChopper MyChopperEntity;
+   
     //private ArrayList<Entity> entityPool;
     
     private static ShapeObjFile test_bunny;
@@ -147,8 +148,8 @@ public class OpenGLFrame extends AWTGLCanvas {
 		instance = this;
 		 MyChopperEntity = new EntityChopper();
 		 
-		 MyWorld.addEntity(MyChopperEntity);
-		 MyWorld.addEntity( new EntityChopper(5,5,0));
+		 MyWorld.entitySpawnInWorld(MyChopperEntity);
+		 MyWorld.entitySpawnInWorld( new EntityChopper(5,5,0));
 	       MouseAdapter mouseAdapter = new MouseAdapter ()
 	        {
 	    	   private short keyPressed = 0;
@@ -156,12 +157,13 @@ public class OpenGLFrame extends AWTGLCanvas {
 	    	   private Point iniPos; 
 	            public void mousePressed ( MouseEvent e )
 	            {
-	            	if(e.getButton()==MouseEvent.BUTTON1||e.getButton()==MouseEvent.BUTTON3){
+	            	/*if(e.getButton()==MouseEvent.BUTTON1||e.getButton()==MouseEvent.BUTTON3){
 	            		iniPos = e.getPoint();
 	            		keyPressed = (short) e.getButton();
 	            	}
 	            	System.out.println(e.getButton()+"is pressed");
 	            	// e.getPoint (), e.getPoint () ;
+	            	*/
 	            }
 
 	            public void mouseMoved ( MouseEvent e )
@@ -171,15 +173,18 @@ public class OpenGLFrame extends AWTGLCanvas {
 	           
 	            public void mouseReleased ( MouseEvent e )
 	            {
-					keyPressed = 0;
-					mouseY=0;
-					mouseX=0;
+					/*
+					  	keyPressed = 0;
+						mouseY=0;
+						mouseX=0;
+					*/
 	            }
 	            
 	          
 				public void mouseDragged(MouseEvent e)
 	            {
-	            	System.out.println(e.getButton());
+	            	/*
+	            	 * System.out.println(e.getButton());
 	            	float WayX = (e.getPoint().x- iniPos.x);
 	            	float WayY = (e.getPoint().y- iniPos.y);
 	            	iniPos = e.getPoint();
@@ -196,11 +201,14 @@ public class OpenGLFrame extends AWTGLCanvas {
 	            		PosX += 0.01f*WayX;
 		            	PosY += 0.01f*WayY;
 	            	}
+	            	*/
 	            }
 	            public void mouseWheelMoved(MouseWheelEvent e)
 	            {
-	            	System.out.println(e.getWheelRotation());
-	            	PosZ += 0.25f*e.getWheelRotation();
+	            	/*
+	            	 * 	System.out.println(e.getWheelRotation());
+	            	 *	PosZ += 0.25f*e.getWheelRotation();
+	            	 */
 	            }
 	        };
 	        
@@ -242,6 +250,14 @@ public class OpenGLFrame extends AWTGLCanvas {
 		          
 		             	}
 	             }
+	             switch (key1)
+		           {
+		           	case 32:
+	            	MyWorld.entitySpawnInWorld(new EntityBullet(MyChopperEntity.getPos().x+2f,
+											            		MyChopperEntity.getPos().y+1.5f,
+											            		MyChopperEntity.getPos().z));
+	            	break;
+		           }
 	        	}
 	        	public void keyReleased( KeyEvent e )
 	        	{
@@ -270,12 +286,14 @@ public class OpenGLFrame extends AWTGLCanvas {
 			            	 right = false;
 			            	 break;
 			             }
+			             case ' ':
 			             default:
 			             	{
 			          
 			             	}
-			             	
+			           
 		             }
+		            
 		            
 	        	}
 
@@ -340,7 +358,8 @@ public class OpenGLFrame extends AWTGLCanvas {
         lastTime = thisTime;
         /* And let the camera make its update */
         cam.update(diff);
-        TestJFrame.showThePos.setText("CamPos( x, y, z)=(" + cam.position.x+" , "+cam.position.y+" , "+cam.position.z+")");
+        TestJFrame.showThePos.setText("CamPos( x, y, z)=(" + cam.position.x+" , "+cam.position.y+" , "+cam.position.z+")" +
+        								"Entity count = " + MyWorld.getEntitys().size());
         move();
         glViewport(0, 0, fbWidth, fbHeight);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -387,10 +406,17 @@ public class OpenGLFrame extends AWTGLCanvas {
        
        
        
-       for( Entity iterator : MyWorld.getEntitys() ){
-        	iterator.Update();
+       /*for( Entity iterator : MyWorld.getEntitys() ){
+        	if(iterator==null)continue;
+    	    iterator.Update();
         	iterator.getRender().renderer();
         }
+        */
+      2323232 for( int i=0;i<MyWorld.getEntitys().size();i++ ){
+       	MyWorld.getEntitys().get(i).Update();
+       	MyWorld.getEntitys().get(i).getRender().renderer();
+       }
+       
         glPushMatrix();
         
         TestJFrame.showThePos.setText(TestJFrame.showThePos.getText() + " Ang=" + String.format("%.3f",MyChopperEntity.getBodyAngle()));
