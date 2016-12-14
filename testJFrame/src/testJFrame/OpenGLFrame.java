@@ -98,7 +98,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({ "serial" })
 public class OpenGLFrame extends AWTGLCanvas {
-
+	
 	private World MyWorld;
 	
 	private static final String MODEL_BUNNY = "res/models/bunny.obj";
@@ -405,18 +405,23 @@ public class OpenGLFrame extends AWTGLCanvas {
        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
        
        
+     
+	      for(int i=0;i<MyWorld.getEntitys().size();i++)
+	      {
+	    	  if(MyWorld.getEntitys().get(i).isDead){
+	    		  MyWorld.entityRemoveFromWorld(MyWorld.getEntitys().get(i));
+	    	  }
+	      }
+       for( Entity iterator : MyWorld.getEntitys() ){
+	    	    iterator.Update();
+	        	iterator.getRender().renderer();
+	        }
        
-       /*for( Entity iterator : MyWorld.getEntitys() ){
-        	if(iterator==null)continue;
-    	    iterator.Update();
-        	iterator.getRender().renderer();
-        }
-        */
-      2323232 for( int i=0;i<MyWorld.getEntitys().size();i++ ){
+      /* for( int i=0;i<MyWorld.getEntitys().size();i++ ){
        	MyWorld.getEntitys().get(i).Update();
        	MyWorld.getEntitys().get(i).getRender().renderer();
        }
-       
+       */
         glPushMatrix();
         
         TestJFrame.showThePos.setText(TestJFrame.showThePos.getText() + " Ang=" + String.format("%.3f",MyChopperEntity.getBodyAngle()));

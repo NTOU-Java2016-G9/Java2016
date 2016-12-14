@@ -30,7 +30,7 @@ public class EntityBullet extends Entity {
 		this.moveEntity(0.1f,0.0f, 0.0f);
 		if(this.getPos().x >=25)
 		{
-			dead();
+			setDead();
 		}
 	}
 	
@@ -68,7 +68,7 @@ public class EntityBullet extends Entity {
 				for(Entity iterator : this.worldObj.getEntitys()){
 					if(iterator.getEntityBoundingBox() == whose){
 						System.out.println("[" + iterator +"] Outch!");
-						this.dead();
+						this.setDead();
 						break;
 					}
 				}

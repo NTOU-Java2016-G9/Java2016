@@ -9,7 +9,7 @@ import renderer.Renderer;
 import world.World;
 
 public abstract class Entity {
-
+	public boolean isDead = false;
 	public World worldObj;
 	/*TODO SHOULD NEW A CLASS*/
 	public List<AxisAlignedBB> getBoundingBoxes(){
@@ -44,8 +44,8 @@ public abstract class Entity {
 		Pos.z=z;
 	}
 	public abstract Renderer getRender();
-	public void dead(){
-		this.worldObj.entityRemoveFromWorld(this);
+	public void setDead(){
+		isDead = true;
 	}
 	public abstract void setPosition(double x, double y, double z);
 	public abstract void moveEntity(double x, double y, double z);
