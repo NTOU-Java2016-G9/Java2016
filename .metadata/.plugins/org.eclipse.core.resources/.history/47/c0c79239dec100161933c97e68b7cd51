@@ -1,0 +1,10 @@
+package world;
+
+import entity.Enity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class World {
+	public ArrayList<Entity> Entities;
+}

@@ -1,5 +1,6 @@
 package testJFrame;
 
+
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
@@ -79,6 +80,7 @@ import utility.Model;
 import utility.OBJLoader;
 import entity.*;
 import renderer.*;
+import world.*;
 
 import java.awt.Point;
 import javax.swing.SwingUtilities;
@@ -93,9 +95,12 @@ import org.lwjgl.opengl.awt.AWTGLCanvas;
 import org.lwjgl.opengl.awt.GLData;
 import java.util.ArrayList;
 
+
 @SuppressWarnings({ "serial" })
 public class OpenGLFrame extends AWTGLCanvas {
 
+	private World MyWorld;
+	
 	private static final String MODEL_BUNNY = "res/models/bunny.obj";
 	private static final String MODEL_MITSIHA = "res/models/mitsiha/mitsiha.obj";
     private static int BunnyObject;
@@ -118,10 +123,12 @@ public class OpenGLFrame extends AWTGLCanvas {
     private float PosY = 1.5f;
     private float PosZ = 20f;
     private EntityChopper MyChopperEntity;
-    private ArrayList<Entity> entityPool;
+    //private ArrayList<Entity> entityPool;
     
     private static ShapeObjFile test_bunny;
     private static ShapeObjFile MitsihaObject;
+    
+    
     
     FreeCamera cam = new FreeCamera();
     {
@@ -135,12 +142,13 @@ public class OpenGLFrame extends AWTGLCanvas {
 	public OpenGLFrame( GLData data ) {
 		
 		super(data);
+		MyWorld = new World();
+		
 		instance = this;
-		entityPool = new ArrayList<Entity>();
 		 MyChopperEntity = new EntityChopper();
-	
-		 entityPool.add(MyChopperEntity);
-		 entityPool.add( new EntityChopper(5,5,0));
+		 
+		 MyWorld.addEntity(MyChopperEntity);
+		 MyWorld.addEntity( new EntityChopper(5,5,0));
 	       MouseAdapter mouseAdapter = new MouseAdapter ()
 	        {
 	    	   private short keyPressed = 0;
@@ -376,7 +384,10 @@ public class OpenGLFrame extends AWTGLCanvas {
         
        //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-       for( Entity iterator : entityPool ){
+       
+       
+       
+       for( Entity iterator : MyWorld.getEntitys() ){
         	iterator.Update();
         	iterator.getRender().renderer();
         }
